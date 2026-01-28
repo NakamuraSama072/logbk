@@ -5,9 +5,9 @@ This README.MD is still working in progress.
 A simple Linux log archiving CLI program written in C++
 
 # Requirements
-OS: Linux (6.x recommended)
-Compiler: MinGW g++ 6.1 or later
-Standard: C++ 14
+- OS: Linux (6.x recommended)
+- Compiler: MinGW G++ 6.1 or later
+- Standard: C++ 14
 
 # Build and Run
 ```sh
@@ -24,14 +24,15 @@ logbk <log_file> [backup_directory]
 logbk help
 ```
 Arguments:
-
 - log_file: Path to the log file to backup and clean
 - backup_directory (Optional): Custom backup directory (default: /root/syslogbackup)
 
 Examples:
+```sh
 logbk /var/log/syslog
 logbk /var/log/auth.log /root/mybackups
 logbk help
+```
 
 Notes:
 - Backups are compressed with xz compression (.tar.xz)
