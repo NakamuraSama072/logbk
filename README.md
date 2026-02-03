@@ -1,5 +1,6 @@
 # Read before Proceeding
-This README.MD is still working in progress.
+1. This README.MD is still working in progress.
+2. The project is currently under alpha build and has not been fully tested yet, thus errors are inevitable. Please open issues if found one.
 
 # logbk
 A simple Linux log archiving CLI program written in C++
@@ -7,7 +8,7 @@ A simple Linux log archiving CLI program written in C++
 # Requirements
 - OS: Linux (6.x recommended)
 - Compiler: GCC 6.1 or later / Clang 3.4 or later
-- Standard: C++ 17
+- Standard: C++ 14
 - Build System: CMake 3.10 or later
 
 # Build and Run
