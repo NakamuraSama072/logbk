@@ -6,14 +6,17 @@ A simple Linux log archiving CLI program written in C++
 
 # Requirements
 - OS: Linux (6.x recommended)
-- Compiler: MinGW G++ 6.1 or later
-- Standard: C++ 14
+- Compiler: GCC 6.1 or later / Clang 3.4 or later
+- Standard: C++ 17
+- Build System: CMake 3.10 or later
 
 # Build and Run
 ```sh
-g++ logbk.cpp -o logbk
-chmod +x logbk
-./logbk
+mkdir build
+cd build
+cmake ..
+cmake --build .
+sudo ./logbk
 ```
 
 # Usage:
