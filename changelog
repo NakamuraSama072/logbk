@@ -1,0 +1,50 @@
+## Alpha Build 0.0.6 - 2026/2/4
+
+Refactor!:
+- Refactor the code and put all the functions under ./include and ./src
+
+Chore!:
+- Added copyright and permissions info on code according to the requirements of GPLv3.0
+
+Docs:
+- Added Chinese (Simplified, Traditional) and Japanese README files
+
+## Alpha Build 0.0.5 - 2026/1/26
+
+Feat:
+- File size is now human readable
+- Added timestamp function
+
+Chore!:
+- Refactored code logic in archive_logs
+
+# Non-recorded changes
+
+Changes below were made locally and could not be traced on GitHub.
+
+## Alpha Build 0.0.4 - 2026/1/21
+
+Feat:
+- Add custom backup path
+
+Chore:
+- Make cleanup a separate function (to archive)
+- Slightly modified help logic under sudo/root
+
+## Alpha Build 0.0.3 - 2026/1/21
+
+Feat:
+- Make sure that non-root users can get to know the command syntax
+
+Fix:
+- Failed to create archives due to bad directory settings
+
+## Alpha Build 0.0.2 - 2026/1/20
+
+Fix:
+- Directories were included when creating archives
+
+## Alpha Build 0.0.1 - 2026/1/20
+
+Feat:
+- Initial Code

@@ -5,6 +5,8 @@
 # logbk
 A simple Linux log archiving CLI program written in C++
 
+[简体中文](README-zh_cn.md) | [繁體中文](README-zh_tw.md) | [日本語](README-ja.md)
+
 # Requirements
 - OS: Linux (6.x recommended)
 - Compiler: GCC 6.1 or later / Clang 3.4 or later
@@ -21,12 +23,14 @@ sudo ./logbk
 ```
 
 # Usage:
-Requires root privileges for system log access.
+Root privilege is requried for running this command.
+
 Usage:
 ```sh
 logbk <log_file> [backup_directory]
 logbk help
 ```
+
 Arguments:
 - log_file: Path to the log file to backup and clean
 - backup_directory (Optional): Custom backup directory (default: /root/syslogbackup)
