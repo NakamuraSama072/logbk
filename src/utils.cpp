@@ -20,8 +20,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <ctime>
 #include <iostream>
+#include <chrono>
+#include <time.h>
+#include <sstream>
 
 bool is_root() {
     return geteuid() == 0;
@@ -44,14 +48,23 @@ bool is_regular_file(const std::string &path) {
 }
 
 std::string get_current_timestamp() {
-    std::time_t now = std::time(nullptr);
-    std::string time_buffer(100, '\0');
-    if (std::strftime(&time_buffer[0], time_buffer.size(),
-                      "%Y%m%d-%H%M%S", std::localtime(&now)))
-        return time_buffer;
-    std::cerr << "ERROR: Failed to fetch current timestamp."
-                " Is your system clock service running?\n";
-    return "FAILED_TO_GET_TIME";
+    auto now = std::chrono::system_clock::now();
+    if (!now.time_since_epoch().count()) {
+        std::cerr << "WARNING: Failed to get current system time." << 
+                     " Is your system clock service running?\n";
+        return "NO_TIME_AVAILABLE";
+    }
+    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+    std::tm local_time;
+    if (localtime_r(&now_time, &local_time) == nullptr) {
+        std::cerr << "WARNING: Failed to convert time to local time.\n";
+        return "CONVERSION_FAILED";
+    }
+
+    std::ostringstream oss;
+    oss << std::put_time(&local_time, "%Y%m%d-%H%M%S");
+    return oss.str();
 }
 
 std::string format_file_size(unsigned long size_in_bytes) {
@@ -67,4 +80,22 @@ std::string format_file_size(unsigned long size_in_bytes) {
     std::string readable_size = std::to_string(formatted_size) +
                                 " " + size_units[unit_index];
     return readable_size;
+}
+
+bool create_tar_archive(const std::string &source_path, 
+                        const std::string &file_name, 
+                        const std::string &archive_path) {
+    pid_t pid = fork();
+    if (pid < 0) {
+        std::cerr << "ERROR: Failed to fork process.\n";
+        return false;
+    }
+    if (pid == 0) {
+        execlp("tar", "tar", "-cJf", archive_path.c_str(), 
+               "-C", source_path.c_str(), file_name.c_str(), nullptr);
+        _exit(EXIT_FAILURE);
+    }
+    int status;
+    waitpid(pid, &status, 0);
+    return WIFEXITED(status) && (WEXITSTATUS(status) == 0);
 }

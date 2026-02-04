@@ -27,5 +27,6 @@ bool is_directory(const std::string &path);
 bool is_regular_file(const std::string &path);
 std::string get_current_timestamp();
 std::string format_file_size(unsigned long size_in_bytes);
+bool create_tar_archive(const std::string &source_path, const std::string &file_name, const std::string &archive_path);
 
 #endif

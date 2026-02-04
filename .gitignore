@@ -1,3 +1,9 @@
+# IDE folders
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+
 # Prerequisites
 *.d
 

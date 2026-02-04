@@ -26,7 +26,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 const std::string LOG_BACKUP_DIR = "/root/syslogbackup";
 const mode_t DEFAULT_MODE = 0755;
-const std::string CMD_EXEC_ERROR_MSG = "ERROR: Failed to execute command due to popen() failure.\n";
 
 bool log_cleanup(const std::string &path_to_log) {
     std::ofstream log_ostream(path_to_log, std::ios::trunc);
@@ -37,22 +36,6 @@ bool log_cleanup(const std::string &path_to_log) {
     }
     log_ostream.close();
     return 0;
-}
-
-std::string safe_execute_command(const std::string &cmd,
-                                 const std::string &error_msg) {
-    std::string result;
-    FILE* pipe = popen(cmd.c_str(), "r");
-    if (!pipe) {
-        std::cerr << error_msg;
-        return "EXECUTION_FAILED";
-    }
-    char buffer[128];
-    while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
-        result += buffer;
-    }
-    pclose(pipe);
-    return result;
 }
 
 bool create_directory(const std::string &dir_path, mode_t mode = DEFAULT_MODE) {
@@ -105,10 +88,7 @@ bool archive_logs(const std::string &path_to_log,
     std::string backup_filename = custom_backup_dir + "/"
                                   + file_name + "_" + timestamp + ".tar.xz";
     std::cout << "Attempting to create archives...\n";
-    std::string tar_cmd = "tar -cJf \"" + backup_filename +
-                            "\" -C \"" + file_dir 
-                            + "\" \"" + file_name + "\"";
-    if (safe_execute_command(tar_cmd, CMD_EXEC_ERROR_MSG) == "EXECUTION_FAILED") {
+    if (!create_tar_archive(file_dir, file_name, backup_filename)) {
         std::cerr << "ERROR: Failed to create archive.\n";
         if (file_or_dir_exists(backup_filename))
             remove(backup_filename.c_str());
