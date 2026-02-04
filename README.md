@@ -5,7 +5,7 @@
 # logbk
 A simple Linux log archiving CLI program written in C++
 
-[简体中文](docs/README-zh_cn.md) | [繁體中文](docs/README-zh_tw.md) | [日本語](docs/README-ja.md)
+[简体中文](./docs/README_zh-cn.md) | [繁體中文](./docs/README_zh-tw.md) | [日本語](./docs/README_ja.md)
 
 # Requirements
 - OS: Linux (6.x recommended)
